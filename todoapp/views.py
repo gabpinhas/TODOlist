@@ -4,8 +4,6 @@ from .models import Task
 from django.views.generic.list import ListView
 
 
-class TaskList(ListView):
-    model = Task
-
-
+def tasklist(ListView):
+    return HttpResponse('TO Do list')
 
