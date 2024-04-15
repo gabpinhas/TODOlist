@@ -1,5 +1,13 @@
 asgiref==3.8.1
+click==8.1.7
+colorama==0.4.6
+detect-and-display==0.1.1
+display==1.0.0
 Django==5.0.4
+django-filter==24.2
 djangorestframework==3.15.1
+Markdown==3.6
+numpy==1.26.3
+python-decouple==3.8
 sqlparse==0.5.0
 tzdata==2024.1
