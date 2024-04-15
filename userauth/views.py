@@ -32,7 +32,8 @@ def signup(request):
         user.save()
         token = Token.objects.create(user=user)
         if 'email' in request.data:
-            enviar_email_boas_vindas(request.data['email'])
+            enviar_email_boas_vindas(
+                request.data['email'], request.data['username'])
         return Response({"token": token.key, "user": serializer.data})
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

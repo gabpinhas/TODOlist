@@ -30,6 +30,7 @@ def create_task(request):
     serializer = TaskSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+        enviar_email_tarefa_agendada(request.user, serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -61,10 +62,17 @@ def tasklist(ListView):
 from django.core.mail import send_mail
 from django.conf import settings
 
-def enviar_email_boas_vindas(usuario_email):
-    assunto = 'Bem-vindo ao MeuApp'
-    mensagem = 'Olá! Obrigado por se inscrever no MeuApp. Esperamos que você aproveite nossa plataforma.'
+def enviar_email_boas_vindas(usuario_email, usuario_name):
+    assunto = 'Bem-vindo ao TODO list!!'
+    mensagem = f'Olá! Obrigado por se inscrever no TODO list, {usuario_name}. Esperamos que você aproveite nossa plataforma.'
     remetente = settings.EMAIL_HOST_USER
     destinatario = [usuario_email]
-
     send_mail(assunto, mensagem, remetente, destinatario)
+
+
+def enviar_email_tarefa_agendada(user, task_data):
+    assunto = 'Tarefa Agendada!'
+    mensagem = f'Olá! {user.username}, sua tarefa {task_data["title"]} foi agendada para {task_data["task_date"]}. Esperamos que você aproveite nossa plataforma.'
+    remetente = settings.EMAIL_HOST_USER
+    destinatario = [user.email]
+    send_mail(assunto, mensagem, remetente, destinatario)   
