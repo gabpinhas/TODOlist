@@ -9,7 +9,7 @@ class Task(models.Model):
     title = models.CharField(max_length=200)
     create = models.DateTimeField(auto_now_add=True)
     task_date = models.DateTimeField(default=timezone.now)
-    category = models.CharField(max_length=150)
+    category = models.CharField(max_length=150, blank=True)
     complete = models.BooleanField(default=False)
 
     def __str__(self):
@@ -17,4 +17,3 @@ class Task(models.Model):
 
     class Meta:
         ordering = ['complete']
-

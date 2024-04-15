@@ -1,3 +1,5 @@
+from django.core.mail import send_mail
+from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Task
@@ -38,8 +40,8 @@ def create_task(request):
 @api_view(['PUT'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def update_task(request, task_id):
-    task = get_object_or_404(Task, id=task_id, user=request.user)
+def update_task(request, task_title):
+    task = get_object_or_404(Task, title=task_title, user=request.user)
     serializer = TaskSerializer(instance=task, data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -50,8 +52,8 @@ def update_task(request, task_id):
 @api_view(['DELETE'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def delete_task(request, task_id):
-    task = get_object_or_404(Task, id=task_id, user=request.user)
+def delete_task(request, task_title):
+    task = get_object_or_404(Task, title=task_title, user=request.user)
     task.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -59,12 +61,11 @@ def delete_task(request, task_id):
 def tasklist(ListView):
     return HttpResponse('TO Do list')
 
-from django.core.mail import send_mail
-from django.conf import settings
 
 def enviar_email_boas_vindas(usuario_email, usuario_name):
     assunto = 'Bem-vindo ao TODO list!!'
-    mensagem = f'Olá! Obrigado por se inscrever no TODO list, {usuario_name}. Esperamos que você aproveite nossa plataforma.'
+    mensagem = f'Olá! Obrigado por se inscrever no TODO list, {
+        usuario_name}. Esperamos que você aproveite nossa plataforma.'
     remetente = settings.EMAIL_HOST_USER
     destinatario = [usuario_email]
     send_mail(assunto, mensagem, remetente, destinatario)
@@ -72,7 +73,8 @@ def enviar_email_boas_vindas(usuario_email, usuario_name):
 
 def enviar_email_tarefa_agendada(user, task_data):
     assunto = 'Tarefa Agendada!'
-    mensagem = f'Olá! {user.username}, sua tarefa {task_data["title"]} foi agendada para {task_data["task_date"]}. Esperamos que você aproveite nossa plataforma.'
+    mensagem = f'Olá! {user.username}, sua tarefa {task_data["title"]} foi agendada para {
+        task_data["task_date"]}. Esperamos que você aproveite nossa plataforma.'
     remetente = settings.EMAIL_HOST_USER
     destinatario = [user.email]
-    send_mail(assunto, mensagem, remetente, destinatario)   
+    send_mail(assunto, mensagem, remetente, destinatario)
