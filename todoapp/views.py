@@ -57,3 +57,14 @@ def delete_task(request, task_id):
 
 def tasklist(ListView):
     return HttpResponse('TO Do list')
+
+from django.core.mail import send_mail
+from django.conf import settings
+
+def enviar_email_boas_vindas(usuario_email):
+    assunto = 'Bem-vindo ao MeuApp'
+    mensagem = 'Olá! Obrigado por se inscrever no MeuApp. Esperamos que você aproveite nossa plataforma.'
+    remetente = settings.EMAIL_HOST_USER
+    destinatario = [usuario_email]
+
+    send_mail(assunto, mensagem, remetente, destinatario)

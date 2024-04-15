@@ -4,7 +4,7 @@ from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import render
-
+from todoapp.views import enviar_email_boas_vindas
 from .serializers import UserSerializer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -31,6 +31,8 @@ def signup(request):
         user.set_password(request.data['password'])
         user.save()
         token = Token.objects.create(user=user)
+        if 'email' in request.data:
+            enviar_email_boas_vindas(request.data['email'])
         return Response({"token": token.key, "user": serializer.data})
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
