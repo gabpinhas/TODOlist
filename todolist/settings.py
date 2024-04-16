@@ -128,18 +128,18 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-<<<<<<< HEAD
+#<<<<<<< HEAD
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  # Porta do servidor SMTP
 EMAIL_USE_TLS = True  # Use TLS (True) ou SSL (False) para conexão segura
 EMAIL_HOST_USER = 'todotoyoulist@gmail.com'  # Seu endereço de e-mail remetente
 EMAIL_HOST_PASSWORD = 'fsfnmqstxcctwnca'  # Sua senha de e-mail remetente
-=======
+#=======
 EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT')  # Porta do servidor SMTP
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default = False, cast = bool)  # Use TLS (True) ou SSL (False) para conexão segura
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')  # Seu endereço de e-mail remetente
 EMAIL_HOST_PASSWORD = ''  # Sua senha de e-mail remetente
->>>>>>> 2129811c003528359d98dc1e1c95e306b8119f5b
+#>>>>>>> 2129811c003528359d98dc1e1c95e306b8119f5b
