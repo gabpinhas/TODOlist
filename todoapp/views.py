@@ -13,6 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from django.db.models import Q
 
 
 @api_view(['GET'])
@@ -20,6 +21,20 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 @permission_classes([IsAuthenticated])
 def get_tasks(request):
     tasks = Task.objects.filter(user=request.user)
+    serializer = TaskSerializer(tasks, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def filter_tasks(request, task_category):
+    task_category = task_category.lower()
+    # tasks = Task.objects.filter(user=request.user).filter(category=task_category)
+    tasks = Task.objects.filter(
+        Q(user=request.user) &
+        (Q(category__icontains=task_category) | Q(category__iexact=task_category))
+    )
     serializer = TaskSerializer(tasks, many=True)
     return Response(serializer.data)
 
