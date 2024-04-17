@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+# import os
 from pathlib import Path
 from decouple import config, Csv
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default = False, cast = bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default = [], cast = Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
 # Application definition
 
@@ -128,18 +128,20 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#<<<<<<< HEAD
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587  # Porta do servidor SMTP
-EMAIL_USE_TLS = True  # Use TLS (True) ou SSL (False) para conexão segura
-EMAIL_HOST_USER = 'todotoyoulist@gmail.com'  # Seu endereço de e-mail remetente
-EMAIL_HOST_PASSWORD = 'fsfnmqstxcctwnca'  # Sua senha de e-mail remetente
-#=======
+# <<<<<<< HEAD
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587  # Porta do servidor SMTP
+# EMAIL_USE_TLS = True  # Use TLS (True) ou SSL (False) para conexão segura
+# EMAIL_HOST_USER = 'todotoyoulist@gmail.com'  # Seu endereço de e-mail remetente
+# EMAIL_HOST_PASSWORD = 'fsfnmqstxcctwnca'  # Sua senha de e-mail remetente
+# =======
 EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT')  # Porta do servidor SMTP
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default = False, cast = bool)  # Use TLS (True) ou SSL (False) para conexão segura
+EMAIL_PORT = config('EMAIL_PORT', cast=int)  # Porta do servidor SMTP
+# Use TLS (True) ou SSL (False) para conexão segura
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')  # Seu endereço de e-mail remetente
-EMAIL_HOST_PASSWORD = ''  # Sua senha de e-mail remetente
-#>>>>>>> 2129811c003528359d98dc1e1c95e306b8119f5b
+# Sua senha de e-mail remetente
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# >>>>>>> 2129811c003528359d98dc1e1c95e306b8119f5b
