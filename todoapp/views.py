@@ -55,8 +55,8 @@ def create_task(request):
 @api_view(['PUT'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def update_task(request, task_title):
-    task = get_object_or_404(Task, title=task_title, user=request.user)
+def update_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
     serializer = TaskSerializer(instance=task, data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -67,8 +67,8 @@ def update_task(request, task_title):
 @api_view(['DELETE'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def delete_task(request, task_title):
-    task = get_object_or_404(Task, title=task_title, user=request.user)
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
     task.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 

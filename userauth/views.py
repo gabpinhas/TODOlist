@@ -14,7 +14,10 @@ from django.shortcuts import get_object_or_404
 
 @api_view(['POST'])
 def login(request):
-    user = get_object_or_404(User, username=request.data['username'])
+    try:
+        user = User.objects.get(username=request.data['username'])
+    except User.DoesNotExist:
+        return Response({'detail': "Usuário não encontrado!"}, status=status.HTTP_404_NOT_FOUND)
     if not user.check_password(request.data['password']):
         return Response({'detail': "Senha Incorreta!"}, status=status.HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user=user)

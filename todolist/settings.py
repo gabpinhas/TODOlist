@@ -31,6 +31,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'todolist',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,11 +46,12 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -145,3 +147,4 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')  # Seu endereço de e-mail remetente
 # Sua senha de e-mail remetente
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 # >>>>>>> 2129811c003528359d98dc1e1c95e306b8119f5b
+CORS_ALLOW_ALL_ORIGINS = True
